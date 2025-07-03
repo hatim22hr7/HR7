@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>موقع تجريبي Hatim Haouar</title>
+<style>
+  @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+  body {
+    margin: 0; padding: 0;
+    background: #000;
+    overflow-x: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    user-select: none;
+  }
+  /* خطوط تتحرك مع الماوس */
+  canvas#bg-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 0;
+  }
+  .container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 60px 20px;
+    max-width: 480px;
+    margin: auto;
+  }
+  /* صورة 1.jpeg */
+  .profile-img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 20px auto;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 0px crimson;
+  }
+  .profile-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: inherit;
+  }
+  .profile-img:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 25px crimson;
+  }
+
+  /* معلومات شخصية */
+  .personal-info {
+    color: #ff4444;
+    font-weight: 600;
+    margin-bottom: 40px;
+    line-height: 1.6;
+    font-size: 20px;
+  }
+
+  /* الخانات الاجتماعية */
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin: 0 auto;
+  }
+  .social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    font-size: 30px;
+    color: white;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 0 transparent;
+    cursor: pointer;
+  }
+  /* ألوان وأضواء خاصة لكل شبكة */
+  .social-links a.facebook {
+    background: #1877f2;
+    box-shadow: 0 0 8px #1877f2;
+  }
+  .social-links a.facebook:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px #1877f2;
+  }
+  .social-links a.instagram {
+    background: #e1306c;
+    box-shadow: 0 0 8px #e1306c;
+  }
+  .social-links a.instagram:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px #e1306c;
+  }
+  .social-links a.youtube {
+    background: #ff0000;
+    box-shadow: 0 0 8px #ff0000;
+  }
+  .social-links a.youtube:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px #ff0000;
+  }
+
+  /* تعديل أيقونة X باللون الأسود مع الطائر الأزرق */
+  .social-links a.x {
+    background: #000;
+    box-shadow: 0 0 8px #000;
+    color: #1DA1F2;
+  }
+  .social-links a.x:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px #1DA1F2;
+    color: #1DA1F2;
+  }
+
+  .social-links a.pinterest {
+    background: #bd081c;
+    box-shadow: 0 0 8px #bd081c;
+  }
+  .social-links a.pinterest:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px #bd081c;
+  }
+  .social-links a.twitch {
+    background: #9146ff;
+    box-shadow: 0 0 8px #9146ff;
+  }
+  .social-links a.twitch:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px #9146ff;
+  }
+
+  /* ضوء تحت الماوس */
+  #mouse-light {
+    position: fixed;
+    pointer-events: none;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 80%);
+    border-radius: 50%;
+    mix-blend-mode: screen;
+    z-index: 0;
+    transition: top 0.1s ease, left 0.1s ease;
+  }
+
+  /* Responsive design */
+  @media (max-width: 600px) {
+    .container {
+      padding: 30px 10px;
+      max-width: 100%;
+    }
+    .profile-img {
+      width: 140px;
+      height: 140px;
+      margin-bottom: 15px;
+    }
+    .personal-info {
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+    .social-links {
+      gap: 20px;
+    }
+    .social-links a {
+      width: 55px;
+      height: 55px;
+      font-size: 24px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="container">
+  <div class="profile-img">
+    <img src="1.jpeg" alt="Profile Image" />
+  </div>
+
+  <div class="personal-info">
+    <p><strong>الاسم:</strong> حاتم{Hatim} </p>
+    <p><strong>الكنية:</strong> هوار{Haouar} </p>
+    <p><strong>اللقب:</strong> HR7</p>
+    <p><strong>تاريخ الإزدياد:</strong> 02/11/2007</p>
+    <p><strong>البلد:</strong> المغرب</p>
+  </div>
+
+  <div class="social-links">
+    <a href="https://www.facebook.com/hatim.haouar/" class="facebook" target="_blank" rel="noopener" title="Facebook">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="https://www.instagram.com/hatim.haouar.7/" class="instagram" target="_blank" rel="noopener" title="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://www.youtube.com/channel/UCkx4mKxyJJq1qtbTzC53RgA" class="youtube" target="_blank" rel="noopener" title="YouTube">
+      <i class="fab fa-youtube"></i>
+    </a>
+    <a href="https://x.com/Hatim_Haouar_7" class="x" target="_blank" rel="noopener" title="X">
+      <i class="fab fa-twitter"></i>
+    </a>
+    <a href="https://www.pinterest.com/hatimhaouar/" class="pinterest" target="_blank" rel="noopener" title="Pinterest">
+      <i class="fab fa-pinterest-p"></i>
+    </a>
+    <a href="https://www.twitch.tv/hatim_haouar_7" class="twitch" target="_blank" rel="noopener" title="Twitch">
+      <i class="fab fa-twitch"></i>
+    </a>
+  </div>
+</div>
+
+<div id="mouse-light"></div>
+
+<script>
+  // خطوط تتحرك مع الماوس - خلفية canvas
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let w, h;
+  let mouseX = 0;
+  let mouseY = 0;
+  let lines = [];
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  // إنشاء خطوط عشوائية
+  for(let i=0; i<50; i++) {
+    lines.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      length: 80 + Math.random() * 40,
+      angle: Math.random() * 2 * Math.PI,
+      speed: 0.002 + Math.random() * 0.004
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0,0,w,h);
+    ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+    ctx.lineWidth = 1;
+    lines.forEach(line => {
+      // تغير الزاوية ببطء
+      line.angle += line.speed;
+      // حساب النقطة الثانية
+      let x2 = line.x + Math.cos(line.angle) * line.length;
+      let y2 = line.y + Math.sin(line.angle) * line.length;
+      ctx.beginPath();
+      ctx.moveTo(line.x, line.y);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+      // تأثير تحريك الخطوط حسب قربها من الماوس
+      let dx = mouseX - line.x;
+      let dy = mouseY - line.y;
+      let dist = Math.sqrt(dx*dx + dy*dy);
+      if(dist < 200){
+        ctx.strokeStyle = 'rgba(255, 0, 0,'+ (0.3 - dist/700) +')';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(line.x, line.y);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+      }
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  // تحريك الضوء تحت الماوس
+  const mouseLight = document.getElementById('mouse-light');
+  window.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    mouseLight.style.left = (mouseX - 100) + 'px';
+    mouseLight.style.top = (mouseY - 100) + 'px';
+  });
+</script>
+
+</body>
+</html>
