@@ -134,6 +134,16 @@
     transform: scale(1.2);
     box-shadow: 0 0 20px #9146ff;
   }
+  /* أيقونة Reddit */
+  .social-links a.reddit {
+    background: #ff4500;
+    box-shadow: 0 0 8px #ff4500;
+  }
+  .social-links a.reddit:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px #ff4500;
+  }
+
   #mouse-light {
     position: fixed;
     pointer-events: none;
@@ -146,7 +156,6 @@
     transition: top 0.1s ease, left 0.1s ease;
   }
 
-  /* إضافة تأثير ألوان RGB متحرك على النص */
   .rgb-text {
     font-size: 36px;
     font-weight: 700;
@@ -163,44 +172,18 @@
   }
 
   @keyframes rgbAnimation {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 
   @media (max-width: 600px) {
-    .container {
-      padding: 30px 10px;
-      max-width: 100%;
-    }
-    .profile-img {
-      width: 140px;
-      height: 140px;
-      margin-bottom: 15px;
-    }
-    .personal-info {
-      font-size: 16px;
-      margin-bottom: 30px;
-    }
-    .social-links {
-      gap: 20px;
-    }
-    .social-links a {
-      width: 55px;
-      height: 55px;
-      font-size: 24px;
-    }
-    .rgb-text {
-      font-size: 28px;
-      letter-spacing: 3px;
-      margin-top: 30px;
-    }
+    .container { padding: 30px 10px; max-width: 100%; }
+    .profile-img { width: 140px; height: 140px; margin-bottom: 15px; }
+    .personal-info { font-size: 16px; margin-bottom: 30px; }
+    .social-links { gap: 20px; }
+    .social-links a { width: 55px; height: 55px; font-size: 24px; }
+    .rgb-text { font-size: 28px; letter-spacing: 3px; margin-top: 30px; }
   }
 </style>
 </head>
@@ -243,9 +226,11 @@
     <a href="https://www.twitch.tv/hatim_haouar_7" class="twitch" target="_blank" rel="noopener" title="Twitch">
       <i class="fab fa-twitch"></i>
     </a>
+    <a href="https://www.reddit.com/user/Vivid_Coast3882/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button" class="reddit" target="_blank" rel="noopener" title="Reddit">
+      <i class="fab fa-reddit-alien"></i>
+    </a>
   </div>
 
-  <!-- هنا اسم Hatim Haouar بلون RGB متحرك -->
   <div class="rgb-text">Hatim Haouar</div>
 </div>
 
@@ -259,10 +244,7 @@
   let mouseY = 0;
   let lines = [];
 
-  function resize() {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
-  }
+  function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
   window.addEventListener('resize', resize);
   resize();
 
